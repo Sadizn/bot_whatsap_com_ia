@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsApp Bot & AI Control Center</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo-icon">🤖</div>
+        <div class="brand-text">
+          <h2>WppBot AI</h2>
+          <span>Painel de Controlo</span>
+        </div>
+      </div>
+
+      <nav class="nav-menu">
+        <button class="nav-item active" data-tab="tab-overview">
+          <span class="icon">📊</span> Visão Geral
+        </button>
+        <button class="nav-item" data-tab="tab-integrations">
+          <span class="icon">⚡</span> Integrações & APIs
+        </button>
+        <button class="nav-item" data-tab="tab-ai">
+          <span class="icon">🧠</span> IA & Prompts
+        </button>
+        <button class="nav-item" data-tab="tab-logs">
+          <span class="icon">📜</span> Logs do Sistema
+        </button>
+      </nav>
+
+      <div class="sidebar-status">
+        <div class="status-indicator">
+          <span class="dot" id="wpp-dot"></span>
+          <span>WhatsApp: <strong id="wpp-status-text">Conectando...</strong></span>
+        </div>
+        <div class="status-indicator">
+          <span class="dot" id="ai-dot"></span>
+          <span>IA Python: <strong id="ai-status-text">Verificando...</strong></span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="page-title">
+          <h1 id="page-heading">Visão Geral do Bot</h1>
+          <p id="page-subheading">Monitore a conexão do WhatsApp e o status das automações</p>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-secondary" id="btn-refresh">Atualizar Dados</button>
+        </div>
+      </header>
+
+      <!-- TAB 1: VISÃO GERAL -->
+      <section id="tab-overview" class="tab-pane active">
+        <!-- Stat Cards -->
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <div class="stat-icon green">💬</div>
+            <div class="stat-info">
+              <span class="stat-label">Mensagens Recebidas</span>
+              <h3 class="stat-value" id="stat-received">0</h3>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon blue">🚀</div>
+            <div class="stat-info">
+              <span class="stat-label">Respostas Enviadas</span>
+              <h3 class="stat-value" id="stat-sent">0</h3>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon purple">🧠</div>
+            <div class="stat-info">
+              <span class="stat-label">Modelo de IA</span>
+              <h3 class="stat-value" id="stat-model">Gemini 2.5 Flash</h3>
+            </div>
+          </div>
+          <div class="card stat-card">
+            <div class="stat-icon orange">⚙️</div>
+            <div class="stat-info">
+              <span class="stat-label">Integrações Ativas</span>
+              <h3 class="stat-value" id="stat-active-integrations">1</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- WhatsApp Connection Box -->
+        <div class="grid-two-cols">
+          <div class="card connection-card">
+            <div class="card-header">
+              <h3>📱 Conexão WhatsApp</h3>
+              <span class="badge" id="wpp-badge">Aguardando QR</span>
+            </div>
+            <div class="card-body connection-body">
+              <div id="qr-container" class="qr-wrapper">
+                <div class="spinner" id="qr-spinner"></div>
+                <img id="qr-image" src="" alt="QR Code WhatsApp" style="display:none;" />
+                <p class="qr-help" id="qr-help">Aponte a câmera do seu WhatsApp para conectar.</p>
+              </div>
+
+              <div id="connected-info" class="connected-info" style="display:none;">
+                <div class="success-icon">✅</div>
+                <h4>WhatsApp Conectado</h4>
+                <p id="user-phone">ID: --</p>
+                <p class="connected-hint">O bot está pronto para receber e responder mensagens.</p>
+              </div>
+
+              <div class="connection-actions">
+                <button class="btn btn-primary" id="btn-restart-wa">🔄 Reiniciar Conexão</button>
+                <button class="btn btn-danger" id="btn-disconnect-wa">Desconectar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Switches Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3>⚡ Controlo Rápido de Respostas</h3>
+            </div>
+            <div class="card-body">
+              <div class="toggle-list">
+                <div class="toggle-item">
+                  <div class="toggle-info">
+                    <h4>Respostas Automáticas</h4>
+                    <p>Ligar ou pausar todas as respostas automáticas do bot.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-autoreply" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-item">
+                  <div class="toggle-info">
+                    <h4>Motor de IA (Gemini)</h4>
+                    <p>Processar mensagens com Inteligência Artificial generativa.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-ai-engine" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-item">
+                  <div class="toggle-info">
+                    <h4>Responder em Conversas Privadas</h4>
+                    <p>Atender clientes e usuários no chat privado.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-private" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-item">
+                  <div class="toggle-info">
+                    <h4>Responder em Grupos</h4>
+                    <p>Permitir que o bot responda em grupos do WhatsApp.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-groups">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="toggle-item">
+                  <div class="toggle-info">
+                    <h4>Exigir Prefixo (! ou /)</h4>
+                    <p>Responder apenas mensagens que iniciem com prefixo.</p>
+                  </div>
+                  <label class="switch">
+                    <input type="checkbox" id="toggle-prefix">
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 2: INTEGRAÇÕES & APIS -->
+      <section id="tab-integrations" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <h3>🔌 Módulos e Integrações de APIs</h3>
+            <p>Ligue ou desligue APIs e integrações conforme sua necessidade.</p>
+          </div>
+          <div class="card-body">
+            <div class="integrations-grid" id="integrations-list">
+              <!-- Renderizado dinamicamente via JS -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: IA & PROMPTS -->
+      <section id="tab-ai" class="tab-pane">
+        <div class="card">
+          <div class="card-header">
+            <h3>⚙️ Configuração do Assistente de IA</h3>
+            <p>Personalize as instruções e a personalidade do bot em tempo real.</p>
+          </div>
+          <div class="card-body">
+            <form id="ai-config-form">
+              <div class="form-group">
+                <label for="ai-model-select">Modelo do Google Gemini</label>
+                <select id="ai-model-select" class="form-control">
+                  <option value="gemini-3.8-flash">Gemini 3.8 Flash (Recomendado, Ultrarrápido & Estável)</option>
+                  <option value="gemini-3.5-flash-lite">Gemini 3.5 Flash Lite (Mais Rápido & Econômico)</option>
+                  <option value="gemini-3.7-flash">Gemini 3.7 Flash</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="system-prompt-text">Prompt do Sistema (Instruções e Personalidade)</label>
+                <textarea id="system-prompt-text" rows="6" class="form-control" placeholder="Instruções de como o bot deve se comportar..."></textarea>
+                <small class="form-hint">Dica: Defina o nome da empresa, tom de voz, regras de atendimento e horário de funcionamento.</small>
+              </div>
+
+              <div class="form-group">
+                <label for="api-key-input">Chave Gemini API (Google AI Studio)</label>
+                <input type="password" id="api-key-input" class="form-control" placeholder="AIzaSy..." />
+                <small class="form-hint">Pode ser definida no arquivo .env ou configurada diretamente aqui.</small>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Salvar Configurações</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: LOGS -->
+      <section id="tab-logs" class="tab-pane">
+        <div class="card">
+          <div class="card-header d-flex-between">
+            <div>
+              <h3>🖥️ Logs e Atividades em Tempo Real</h3>
+              <p>Monitore o fluxo de mensagens, chamadas à IA e erros.</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-logs">Limpar Visualização</button>
+          </div>
+          <div class="card-body p-0">
+            <div class="terminal-window" id="logs-container">
+              <!-- Logs entram aqui -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast">Ação concluída com sucesso!</div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

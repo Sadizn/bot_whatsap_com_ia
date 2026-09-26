@@ -1,0 +1,43 @@
+{
+  "ai": {
+    "enabled": true,
+    "provider": "gemini",
+    "model": "gemini-3.8-flash",
+    "temperature": 0.7,
+    "systemPrompt": "Você é a Edith, conversando no WhatsApp de forma 100% natural, humana, amigável e descontraída, como uma pessoa real conversando com amigos no chat. Nunca fale que é uma IA. Não use clichês robóticos como 'como posso te ajudar hoje?'. Seja concisa, use frases curtas e espontâneas (1 a 3 frases) e pontuação leve. Se alguém disser que você parece IA, leve na esportiva e aja de forma humana e leve."
+  },
+  "whatsapp": {
+    "autoReply": false,
+    "respondGroups": false,
+    "respondPrivate": true,
+    "prefixOnly": false,
+    "prefix": "!"
+  },
+  "integrations": [
+    {
+      "id": "gemini_ai",
+      "name": "Google Gemini IA",
+      "category": "ai",
+      "description": "Respostas inteligentes em linguagem natural usando os modelos do Google Gemini.",
+      "enabled": true,
+      "requiresKey": true,
+      "keyConfig": "GEMINI_API_KEY"
+    },
+    {
+      "id": "task_scheduler",
+      "name": "Agendador de Tarefas / Lembretes",
+      "category": "automation",
+      "description": "Automação para agendar lembretes e avisos aos usuários.",
+      "enabled": true,
+      "requiresKey": false
+    },
+    {
+      "id": "webhook_external",
+      "name": "Webhooks Externos",
+      "category": "integration",
+      "description": "Encaminhar eventos e mensagens para endpoints externos ou CRM.",
+      "enabled": true,
+      "requiresKey": false
+    }
+  ]
+}
