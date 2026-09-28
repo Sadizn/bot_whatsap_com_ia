@@ -2,18 +2,22 @@
   "name": "bot-whatsapp-com-ia-root",
   "version": "1.0.0",
   "private": true,
-  "description": "WhatsApp Bot híbrido com Node.js, Python (IA & Automações) e Dashboard de Controlo",
+  "description": "WhatsApp Bot híbrido com Node.js, Python (IA & Automações) e Aplicação Desktop Electron",
   "scripts": {
+    "app": "concurrently -n \"WHATSAPP,AI-ENGINE,DESKTOP\" -c \"green,cyan,magenta\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --port 8000\" \"electron desktop/main.js\"",
+    "dev:all": "concurrently -n \"WHATSAPP,AI-ENGINE,DESKTOP\" -c \"green,cyan,magenta\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --reload --port 8000\" \"electron desktop/main.js\"",
+    "start": "concurrently -n \"WHATSAPP,AI-ENGINE\" -c \"green,cyan\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --port 8000\"",
+    "dev": "concurrently -n \"WHATSAPP,AI-ENGINE\" -c \"green,cyan\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --reload --port 8000\"",
+    "desktop": "electron desktop/main.js",
     "dev:whatsapp": "node services/whatsapp-gateway/index.js",
     "dev:ai": ".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --reload --port 8000",
     "start:whatsapp": "node services/whatsapp-gateway/index.js",
     "start:ai": ".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --port 8000",
-    "dev": "concurrently -n \"WHATSAPP,AI-ENGINE\" -c \"green,cyan\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --reload --port 8000\"",
-    "start": "concurrently -n \"WHATSAPP,AI-ENGINE\" -c \"green,cyan\" \"node services/whatsapp-gateway/index.js\" \".\\services\\ai-engine\\venv\\Scripts\\python -m uvicorn main:app --app-dir services/ai-engine --port 8000\"",
     "setup": "scripts\\setup.bat"
   },
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "electron": "^44.4.5"
   },
   "engines": {
     "node": ">=18.0.0"

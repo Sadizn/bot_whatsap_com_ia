@@ -1,7 +1,12 @@
 class AppLogger {
   constructor() {
     this.logs = [];
-    this.maxLogs = 200;
+    this.maxLogs = 300;
+    this.onLogCallback = null;
+  }
+
+  setOnLog(callback) {
+    this.onLogCallback = callback;
   }
 
   log(level, message, meta = null) {
@@ -19,6 +24,14 @@ class AppLogger {
       console.warn(prefix, message, meta || '');
     } else {
       console.log(prefix, message, meta || '');
+    }
+
+    if (this.onLogCallback) {
+      try {
+        this.onLogCallback(entry);
+      } catch (e) {
+        // Ignora erro no broadcast de log
+      }
     }
   }
 

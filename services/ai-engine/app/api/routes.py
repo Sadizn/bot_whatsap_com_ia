@@ -64,15 +64,20 @@ async def process_chat(req: ChatRequest):
     history_context = conversation_store.get_history_context(user_id)
     prev_id = conversation_store.get_last_interaction_id(user_id)
 
-    # 3. Processar via IA (Gemini com suporte a texto, áudio, imagens e histórico)
+    # 3. Determinar System Prompt específico (Chat Privado vs Grupo)
+    default_prompt = settings.DEFAULT_GROUP_SYSTEM_PROMPT if req.is_group else settings.DEFAULT_SYSTEM_PROMPT
+    prompt_to_use = req.system_prompt or default_prompt
+
+    # 4. Processar via IA (Gemini com suporte a texto, áudio, imagens e histórico)
     reply_text, new_interaction_id = await gemini_provider.generate_response(
         prompt=message_text,
         user_id=user_id,
         media=req.media,
         history_context=history_context,
         previous_interaction_id=prev_id,
-        system_instruction=req.system_prompt or settings.DEFAULT_SYSTEM_PROMPT,
-        model=req.model or settings.DEFAULT_MODEL
+        system_instruction=prompt_to_use,
+        model=req.model or settings.DEFAULT_MODEL,
+        api_key=req.api_key
     )
 
     # 4. Registrar mensagens no histórico persistente
@@ -97,3 +102,46 @@ async def process_chat(req: ChatRequest):
 async def clear_memory(req: ClearMemoryRequest):
     conversation_store.clear(req.user_id)
     return {"message": f"Histórico de conversas do usuário {req.user_id} limpo com sucesso."}
+
+from pydantic import BaseModel
+
+class MusicResolveRequest(BaseModel):
+    query: str
+
+@router.post("/music/resolve")
+async def resolve_music(req: MusicResolveRequest):
+    query = (req.query or "").strip()
+    if not query:
+        raise HTTPException(status_code=400, detail="Query de busca vazia.")
+    
+    import yt_dlp
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'quiet': True,
+        'no_warnings': True,
+        'extract_flat': False,
+        'default_search': 'ytsearch1'
+    }
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(query, download=False)
+            if info and 'entries' in info and len(info['entries']) > 0:
+                info = info['entries'][0]
+            
+            if not info:
+                raise HTTPException(status_code=404, detail="Nenhum resultado encontrado.")
+            
+            return {
+                "success": True,
+                "title": info.get("title") or query,
+                "artist": info.get("uploader") or info.get("channel") or "YouTube Music",
+                "duration": info.get("duration_string") or "03:30",
+                "views": str(info.get("view_count", "")),
+                "url": info.get("webpage_url") or query,
+                "thumbnail": info.get("thumbnail"),
+                "audioUrl": info.get("url")
+            }
+    except Exception as e:
+        logger.error(f"Erro ao extrair áudio com yt-dlp: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao extrair áudio: {str(e)}")
+

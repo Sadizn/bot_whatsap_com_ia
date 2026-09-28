@@ -21,7 +21,7 @@ class AIClient {
     }
   }
 
-  async processMessage({ userId, message, userName = '', isGroup = false }) {
+  async processMessage({ userId, message, media = null, userName = '', isGroup = false }) {
     const currentConfig = configStore.get();
     
     // Se a IA estiver desativada pelo toggle do Dashboard
@@ -31,13 +31,19 @@ class AIClient {
     }
 
     try {
+      const selectedPrompt = isGroup 
+        ? (currentConfig.ai?.groupSystemPrompt || currentConfig.ai?.systemPromptGroup)
+        : currentConfig.ai?.systemPrompt;
+
       const payload = {
         user_id: userId,
-        message: message,
+        message: message || '',
+        media: media,
         user_name: userName,
         is_group: isGroup,
-        system_prompt: currentConfig.ai?.systemPrompt,
-        model: currentConfig.ai?.model
+        system_prompt: selectedPrompt,
+        model: currentConfig.ai?.model,
+        api_key: currentConfig.ai?.apiKey || process.env.GEMINI_API_KEY
       };
 
       const res = await this.http.post('/api/v1/chat', payload);
@@ -51,6 +57,16 @@ class AIClient {
         reply: "Opa, deu uma oscilação aqui na minha conexão agora há pouco! Pode mandar de novo?",
         source: "error"
       };
+    }
+  }
+
+  async getConversations() {
+    try {
+      const res = await this.http.get('/api/v1/conversations');
+      return res.data?.conversations || [];
+    } catch (error) {
+      logger.warn(`Não foi possível buscar conversas do Python: ${error.message}`);
+      return [];
     }
   }
 

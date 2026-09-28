@@ -39,6 +39,11 @@ class WSManager {
     waClient.setOnStatusChange((statusData) => {
       this.broadcast('STATUS_UPDATE', statusData);
     });
+
+    // Conectar ao logger para streaming de logs em tempo real para o Dashboard
+    logger.setOnLog((logEntry) => {
+      this.broadcast('LOG', logEntry);
+    });
   }
 
   broadcast(type, payload) {

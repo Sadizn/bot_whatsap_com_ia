@@ -1,12 +1,14 @@
+import os
 import logging
 import base64
+import asyncio
 from typing import Optional, List, Any
 from app.core.config import settings
 from app.api.models import MediaPayload
 
 logger = logging.getLogger(__name__)
 
-# Modelos recomendados em ordem de disponibilidade, velocidade e quotas
+# Modelos recomendados em ordem de velocidade, disponibilidade e quota
 RECOMMENDED_MODELS = [
     "gemini-3.5-flash-lite",
     "gemini-3.8-flash",
@@ -41,21 +43,32 @@ class GeminiProvider:
         history_context: Optional[str] = None,
         previous_interaction_id: Optional[str] = None,
         system_instruction: Optional[str] = None,
-        model: Optional[str] = None
+        model: Optional[str] = None,
+        api_key: Optional[str] = None
     ) -> tuple[str, Optional[str]]:
         """
-        Gera resposta inteligente usando Google Gemini com suporte a:
+        Gera resposta inteligente usando Google Gemini AIO (Assíncrono) com:
         - Conversação multi-turno e histórico de contexto
         - Multimodal nativo (Áudios PTT e Imagens do WhatsApp)
-        - Failover automático entre modelos (3.5-flash-lite / 3.8-flash)
+        - Timeout rápido (10s por modelo) e failover automático instantâneo
         """
-        if not self.client and settings.GEMINI_API_KEY:
-            self._initialize_client()
+        # Obter a chave mais atualizada (passada na requisição, no .env ou settings)
+        active_key = (api_key or "").strip() or os.getenv("GEMINI_API_KEY", "").strip() or settings.GEMINI_API_KEY
+        
+        if active_key:
+            if not self.client or getattr(self, "_current_key", None) != active_key:
+                try:
+                    from google import genai
+                    self.client = genai.Client(api_key=active_key)
+                    self._current_key = active_key
+                    logger.info("Cliente Google GenAI atualizado com nova chave de API.")
+                except Exception as e:
+                    logger.error(f"Erro ao instanciar cliente GenAI: {e}")
 
         if not self.client:
             return (
-                "Opa! Parece que a chave da API do Gemini ainda não foi configurada. "
-                "Configure-a no arquivo .env ou pelo Dashboard.",
+                "Opa! A chave de API do Gemini ainda não foi configurada ou é inválida. "
+                "Por favor, insira uma chave válida do Google AI Studio no Dashboard ou no arquivo .env.",
                 None
             )
 
@@ -110,19 +123,28 @@ class GeminiProvider:
                     temperature=0.7
                 )
 
-                response = self.client.models.generate_content(
-                    model=current_model,
-                    contents=contents,
-                    config=config
+                logger.info(f"Enviando requisição assíncrona ao Gemini com modelo '{current_model}'...")
+                
+                # Executa a chamada com timeout de 10 segundos para não travar
+                response = await asyncio.wait_for(
+                    self.client.aio.models.generate_content(
+                        model=current_model,
+                        contents=contents,
+                        config=config
+                    ),
+                    timeout=12.0
                 )
 
                 if response and response.text:
+                    logger.info(f"Resposta gerada com sucesso via '{current_model}'!")
                     return response.text.strip(), None
 
+            except asyncio.TimeoutError:
+                logger.warning(f"Tempo limite (12s) excedido para modelo '{current_model}'. Alternando para o próximo...")
             except Exception as e:
                 err_msg = str(e)
                 logger.warning(f"Tentativa com modelo '{current_model}' falhou: {err_msg}")
-                # Continua o loop para o próximo modelo candidato (ex: gemini-3.5-flash-lite se o 3.8 bater quota)
+                # Continua o loop para o próximo modelo candidato
 
         logger.error("Todos os modelos candidatos falharam na geração de resposta.")
         return (

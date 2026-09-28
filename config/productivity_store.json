@@ -1,0 +1,46 @@
+{
+  "reminders": [
+    {
+      "id": "rem-1",
+      "title": "Enviar relatório semanal para o João",
+      "date": "2026-09-28",
+      "time": "09:00",
+      "completed": false,
+      "createdAt": "2026-09-27T19:07:16.737Z"
+    }
+  ],
+  "notes": [
+    {
+      "id": "not-1",
+      "content": "Comprar cabo HDMI e adaptador USB-C",
+      "completed": false,
+      "createdAt": "2026-09-27T19:07:16.765Z"
+    },
+    {
+      "id": "not-2",
+      "content": "Alinhar reunião de métricas com o time na quarta-feira",
+      "completed": false,
+      "createdAt": "2026-09-27T19:07:16.765Z"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "tsk-1",
+      "title": "Configurar novos prompts da Edith nos grupos",
+      "description": "Ajustar regras e tom de voz descontraído",
+      "priority": "alta",
+      "status": "em_andamento",
+      "dueDate": "2026-09-29",
+      "createdAt": "2026-09-27T19:07:16.765Z"
+    },
+    {
+      "id": "tsk-2",
+      "title": "Revisar logs de áudios baixados no WhatsApp",
+      "description": "Validar qualidade do reconhecimento de voz",
+      "priority": "media",
+      "status": "pendente",
+      "dueDate": "2026-09-30",
+      "createdAt": "2026-09-27T19:07:16.765Z"
+    }
+  ]
+}

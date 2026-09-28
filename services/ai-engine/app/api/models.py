@@ -14,6 +14,7 @@ class ChatRequest(BaseModel):
     is_group: bool = Field(False, description="Indica se a mensagem veio de um grupo")
     system_prompt: Optional[str] = Field(None, description="Instruções de sistema customizadas")
     model: Optional[str] = Field(None, description="Modelo de IA solicitado")
+    api_key: Optional[str] = Field(None, description="Chave de API do Gemini para uso dinâmico")
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict, description="Metadados extras")
 
 class ChatResponse(BaseModel):
