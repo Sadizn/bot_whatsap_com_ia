@@ -1,1 +1,202 @@
-[]
+[
+  {
+    "id": "tx_1790576062245_j8h8c",
+    "timestamp": "2026-09-28T06:14:22.245Z",
+    "type": "DAILY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": 631,
+    "balanceAfter": 1131,
+    "description": "Recompensa diária coletada (+631 XP)"
+  },
+  {
+    "id": "tx_1790576072387_utmb4",
+    "timestamp": "2026-09-28T06:14:32.387Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 1081,
+    "description": "Reprodução de música: Matuê - 333"
+  },
+  {
+    "id": "tx_1790576147587_heoxt",
+    "timestamp": "2026-09-28T06:15:47.587Z",
+    "type": "BET_LOSS",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 1031,
+    "description": "Aposta perdida (-50 XP)"
+  },
+  {
+    "id": "tx_1790576231071_jyzqt",
+    "timestamp": "2026-09-28T06:17:11.071Z",
+    "type": "WORK",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": 2358,
+    "balanceAfter": 3389,
+    "description": "Trabalho (Programador Fullstack): +2358 XP"
+  },
+  {
+    "id": "tx_1790576316137_gl9iv",
+    "timestamp": "2026-09-28T06:18:36.137Z",
+    "type": "ADMIN_ADD",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": "desktop_dashboard",
+    "amount": 11,
+    "balanceAfter": 3400,
+    "description": "XP adicionado pelo administrador"
+  },
+  {
+    "id": "tx_1790576361032_af6fc",
+    "timestamp": "2026-09-28T06:19:21.032Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 3350,
+    "description": "Reprodução de música: Boa noite Bruno"
+  },
+  {
+    "id": "tx_1790576438627_bq9g2",
+    "timestamp": "2026-09-28T06:20:38.627Z",
+    "type": "BET_WIN",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": 400,
+    "balanceAfter": 3750,
+    "description": "Aposta vitoriosa (+400 XP de lucro)"
+  },
+  {
+    "id": "tx_1790579928606_daqh8",
+    "timestamp": "2026-09-28T07:18:48.606Z",
+    "type": "ADMIN_ADD",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": "desktop_dashboard",
+    "amount": 6250,
+    "balanceAfter": 10000,
+    "description": "XP adicionado pelo administrador"
+  },
+  {
+    "id": "tx_1790588837118_n3tvk",
+    "timestamp": "2026-09-28T09:47:17.118Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 9950,
+    "description": "Reprodução de música: Rihanna - Te Amo"
+  },
+  {
+    "id": "tx_1790589040017_maa0a",
+    "timestamp": "2026-09-28T09:50:40.017Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 9900,
+    "description": "Reprodução de música: Rihanna - Te Amo"
+  },
+  {
+    "id": "tx_1790589528377_rx0gy",
+    "timestamp": "2026-09-28T09:58:48.377Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "71937095106752@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 450,
+    "description": "Reprodução de música: Crawling [Official HD Music Video] - Linkin Park"
+  },
+  {
+    "id": "tx_1790590365552_f93fg",
+    "timestamp": "2026-09-28T10:12:45.552Z",
+    "type": "TRANSFER_SENT",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": "71937095106752@lid",
+    "amount": -1500,
+    "balanceAfter": 8400,
+    "description": "Transferência enviada para @71937095106752"
+  },
+  {
+    "id": "tx_1790590365555_g3lpe",
+    "timestamp": "2026-09-28T10:12:45.555Z",
+    "type": "TRANSFER_RECEIVED",
+    "userJid": "71937095106752@lid",
+    "counterpartyJid": "260614723231981@lid",
+    "amount": 1500,
+    "balanceAfter": 1950,
+    "description": "Transferência recebida de @260614723231981"
+  },
+  {
+    "id": "tx_1790623099055_dh85d",
+    "timestamp": "2026-09-28T19:18:19.055Z",
+    "type": "BET_WIN",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": 650,
+    "balanceAfter": 9050,
+    "description": "Aposta vitoriosa (+650 XP de lucro)"
+  },
+  {
+    "id": "tx_1790623120283_3e6ya",
+    "timestamp": "2026-09-28T19:18:40.283Z",
+    "type": "BET_WIN",
+    "userJid": "71937095106752@lid",
+    "counterpartyJid": null,
+    "amount": 200,
+    "balanceAfter": 2150,
+    "description": "Aposta vitoriosa (+200 XP de lucro)"
+  },
+  {
+    "id": "tx_1790623542953_s5rj8",
+    "timestamp": "2026-09-28T19:25:42.953Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 9000,
+    "description": "Reprodução de música: Os D,Rima Com Cabelo  prod by deluto 930703954"
+  },
+  {
+    "id": "tx_1790623843949_24n3s",
+    "timestamp": "2026-09-28T19:30:43.949Z",
+    "type": "ADMIN_ADD",
+    "userJid": "71937095106752@lid",
+    "counterpartyJid": "desktop_dashboard",
+    "amount": 6250,
+    "balanceAfter": 8400,
+    "description": "XP adicionado pelo administrador"
+  },
+  {
+    "id": "tx_1790774892631_vbuuf",
+    "timestamp": "2026-09-30T13:28:12.631Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 8950,
+    "description": "Reprodução de música: Staff Hombembwa   Cona com Cabelo   Afro House 2019"
+  },
+  {
+    "id": "tx_1790782258866_o4hf6",
+    "timestamp": "2026-09-30T15:30:58.866Z",
+    "type": "BET_WIN",
+    "userJid": "71937095106752@lid",
+    "counterpartyJid": null,
+    "amount": 50,
+    "balanceAfter": 8450,
+    "description": "Aposta vitoriosa (+50 XP de lucro)"
+  },
+  {
+    "id": "tx_1790782390873_gbfr6",
+    "timestamp": "2026-09-30T15:33:10.873Z",
+    "type": "MUSIC_PLAY",
+    "userJid": "260614723231981@lid",
+    "counterpartyJid": null,
+    "amount": -50,
+    "balanceAfter": 8900,
+    "description": "Reprodução de música: Powfu - death bed (coffee for your head) (Official Video) ft. beabadoobee"
+  }
+]

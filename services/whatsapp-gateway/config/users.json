@@ -1,1 +1,62 @@
-{}
+{
+  "260614723231981@lid": {
+    "jid": "260614723231981@lid",
+    "name": "Japonês",
+    "gender": "Masculino",
+    "genderCode": "M",
+    "age": 16,
+    "pushName": "Mananga🈵",
+    "xp": 8900,
+    "lastDaily": "2026-09-28T06:14:22.243Z",
+    "lastWork": "2026-09-28T06:17:11.070Z",
+    "transfersToday": {
+      "date": "2026-09-28",
+      "amount": 1500
+    },
+    "betStats": {
+      "totalBets": 3,
+      "wins": 2,
+      "losses": 1,
+      "xpBet": 1100,
+      "xpWon": 2100
+    },
+    "weeklyXp": {
+      "weekKey": "2026-09-28",
+      "amount": 10300
+    },
+    "registeredAt": "2026-09-28T06:14:01.403Z",
+    "updatedAt": "2026-09-30T15:33:10.871Z",
+    "partner": null,
+    "relationshipDate": null
+  },
+  "71937095106752@lid": {
+    "jid": "71937095106752@lid",
+    "name": "Lya_moon",
+    "gender": "Feminino",
+    "genderCode": "F",
+    "age": 16,
+    "pushName": "Lya_moon",
+    "xp": 8450,
+    "lastDaily": null,
+    "lastWork": null,
+    "transfersToday": {
+      "date": "",
+      "amount": 0
+    },
+    "betStats": {
+      "totalBets": 2,
+      "wins": 2,
+      "losses": 0,
+      "xpBet": 250,
+      "xpWon": 500
+    },
+    "weeklyXp": {
+      "weekKey": "2026-09-28",
+      "amount": 8000
+    },
+    "registeredAt": "2026-09-28T09:55:11.264Z",
+    "updatedAt": "2026-09-30T15:30:58.858Z",
+    "partner": null,
+    "relationshipDate": null
+  }
+}
